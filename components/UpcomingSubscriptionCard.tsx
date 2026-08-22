@@ -1,19 +1,28 @@
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import React from "react";
+import { formatCurrency } from "@/lib/utils";
 
-const UpcomingSubscriptionCard = ({ data : { name, price, daysLeft, icon }}: UpcomingSubscription) => {
+const UpcomingSubscriptionCard = ({
+    name,
+    price,
+    daysLeft,
+    icon,
+    currency,
+}: UpcomingSubscriptionCardProps) => {
     return (
-        <View className="upcoming-subscription-card">
-            <View className="upcoming-subscription-card-header">
-                <Text className="upcoming-subscription-card-title">Upcoming Subscription</Text>
-                <Text className="upcoming-subscription-card-date">Next Renewal: 12/12/2023</Text>
+        <View className="upcoming-card">
+            <View className="upcoming-row">
+                <Image source={icon} className="upcoming-icon" />
+                <View>
+                    <Text className="upcoming-price">{formatCurrency(price, currency)}</Text>
+                    <Text className="upcoming-meta" numberOfLines={1}>
+                        {daysLeft > 1 ? `${daysLeft} days left` : 'Last day'}
+                    </Text>
+                </View>
             </View>
-            <View className="upcoming-subscription-card-body">
-                <Text className="upcoming-subscription-card-name">Netflix</Text>
-                <Text className="upcoming-subscription-card-amount">$15.99</Text>
-            </View>
+            <Text className="upcoming-name" numberOfLines={1}>{name}</Text>
         </View>
     );
-}
+};
 
 export default UpcomingSubscriptionCard;
