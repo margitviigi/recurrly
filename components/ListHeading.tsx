@@ -1,13 +1,20 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 
-const ListHeading = ({ title }: ListHeadingProps) => {
+const ListHeading = ({ title, onViewAllPress }: ListHeadingProps) => {
   return (
     <View className="list-head">
       <Text className="list-title">{title}</Text>
-      <TouchableOpacity className="list-action">
-        <Text className="list-action-text">View All</Text>
-      </TouchableOpacity>
+      {onViewAllPress && (
+        <TouchableOpacity
+          accessibilityRole="button"
+          accessibilityLabel={`View all ${title.toLowerCase()}`}
+          className="list-action"
+          onPress={onViewAllPress}
+        >
+          <Text className="list-action-text">View All</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

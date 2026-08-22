@@ -1,50 +1,49 @@
-# Welcome to your Expo app 👋
+# Recurrly
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Recurrly is an Expo SDK 54 application for tracking subscriptions and upcoming renewals. It uses Expo Router, Clerk authentication, NativeWind, and TypeScript.
 
-## Get started
+## Requirements
 
-1. Install dependencies
+- Node.js 20.19 or newer
+- npm
+- An Expo-compatible iOS/Android environment, Expo Go, or a web browser
+- A Clerk application with email/password authentication and email verification enabled
+- Clerk Native API enabled for native builds
 
-   ```bash
-   npm install
-   ```
+## Environment
 
-2. Start the app
+Create a local `.env` file:
 
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```env
+EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Only the Clerk publishable key belongs in the mobile app environment. Keep `CLERK_SECRET_KEY` in a backend or secure CI environment, never in client code.
 
-## Learn more
+## Development
 
-To learn more about developing your project with Expo, look at the following resources:
+```bash
+npm install
+npm start
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+The current custom Clerk flow works in Expo Go, development builds, and web. After changing native config plugins, rebuild native projects with `npx expo run:ios` or `npx expo run:android`.
 
-## Join the community
+## Validation
 
-Join our community of developers creating universal apps.
+```bash
+npm run typecheck
+npm run lint
+npx expo install --check
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Before shipping authentication, verify a real sign-up and email-code confirmation, sign-in, sign-out, and session restoration after restarting the app.
+
+## Project structure
+
+- `app/(auth)` — public Clerk sign-in and sign-up routes
+- `app/(tabs)` — authenticated tab routes
+- `app/subscriptions` — authenticated subscription detail routes
+- `components` — reusable UI components
+- `constants` — theme, assets, and placeholder subscription data
+- `lib` — formatting helpers

@@ -1,5 +1,4 @@
 import "@/global.css";
-import { Link } from "expo-router";
 import { FlatList, Image, Text, View, } from "react-native";
 import { styled } from "nativewind";
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
@@ -31,7 +30,7 @@ export default function App() {
           <Image source={images.avatar} className="home-avatar" />
           <Text className="home-user-name">{HOME_USER.name}</Text>
         </View>
-        <Image source={icons.add} className="home-add-icon" />
+        <Image source={icons.add} className="home-add-icon" accessible accessibilityLabel="Add subscription" />
       </View>
       <View className="home-balance-card">
         <Text className="home-balance-label">Balance</Text>

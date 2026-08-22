@@ -1,7 +1,18 @@
-import { SplashScreen, Stack } from "expo-router";
+import { ClerkProvider } from '@clerk/expo';
+import { tokenCache } from '@clerk/expo/token-cache';
+import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
 import "@/global.css"
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
+
+const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY ?? "";
+
+SplashScreen.preventAutoHideAsync();
+
+if (!publishableKey) {
+  throw new Error("Missing EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY. Add your key to .env.\nRun: 1) clerk auth login  2) clerk link  3) clerk env pull — then restart the dev server.");
+}
 
 
 export default function RootLayout() {
@@ -16,7 +27,7 @@ export default function RootLayout() {
   
   useEffect(() => {
     if(fontsLoaded) {
-      SplashScreen.hideAsync();
+      SplashScreen.hide();
     }
   }, [fontsLoaded]);
 
@@ -24,5 +35,9 @@ export default function RootLayout() {
   if (!fontsLoaded) {
     return null; // or a loading indicator
   }
-  return <Stack screenOptions={{ headerShown: false }}/>;
+  return (
+    <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
+      <Stack screenOptions={{ headerShown: false }}/>
+    </ClerkProvider>
+  );
 }

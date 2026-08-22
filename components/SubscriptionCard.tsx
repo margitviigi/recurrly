@@ -1,8 +1,7 @@
 import { View, Text, Image, Pressable } from "react-native";
 import React from "react";
 import { formatCurrency, formatStatusLabel, formatSubscriptionDateTime } from "@/lib/utils";
-import clsx from "clsx";
-import { SubscriptionCardProps } from "@/type";
+import { clsx } from "clsx";
 
 const SubscriptionCard = ({
     subscription,
@@ -39,7 +38,6 @@ const SubscriptionCard = ({
                     <Text className="sub-billing">{billing}</Text>
                 </View>
             </View>
-            <Text className="subscription-name" numberOfLines={1}>{name}</Text>
             {expanded && (
                 <View className="sub-body">
                     <View className="sub-details">
